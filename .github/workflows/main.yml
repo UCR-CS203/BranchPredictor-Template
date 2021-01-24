@@ -1,0 +1,103 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI Testing
+
+# Controls when the action will run. 
+on: 
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    timeout-minutes: 20
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Compiling repo
+        run: |
+          make clean
+          make
+
+      - name: Executing code - gcc-10K (0,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 0 -n 1 &> output
+          diff output .github/test/gcc-10K-0-1
+        
+      - name: Executing code - gcc-10K (0,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 0 -n 2 &> output
+          diff output .github/test/gcc-10K-0-2
+
+      - name: Executing code - gcc-10K (4,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 4 -n 1 &> output
+          diff output .github/test/gcc-10K-4-1
+      
+      - name: Executing code - gcc-10K (4,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 4 -n 2 &> output
+          diff output .github/test/gcc-10K-4-2
+
+      - name: Executing code - gcc-10K (6,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 6 -n 1 &> output
+          diff output .github/test/gcc-10K-6-1
+
+      - name: Executing code - gcc-10K (6,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-10K.txt -m 6 -n 2 &> output
+          diff output .github/test/gcc-10K-6-2
+
+      - name: Executing code - gcc-8M (0,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 0 -n 1 &> output
+          diff output .github/test/gcc-8M-0-1
+        
+      - name: Executing code - gcc-8M (0,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 0 -n 2 &> output
+          diff output .github/test/gcc-8M-0-2
+
+      - name: Executing code - gcc-8M (4,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 4 -n 1 &> output
+          diff output .github/test/gcc-8M-4-1
+      
+      - name: Executing code - gcc-8M (4,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 4 -n 2 &> output
+          diff output .github/test/gcc-8M-4-2
+
+      - name: Executing code - gcc-8M (6,1) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 6 -n 1 &> output
+          diff output .github/test/gcc-8M-6-1
+
+      - name: Executing code - gcc-8M (6,2) predictor 
+        run: |
+          ./branchsim -i traces/gcc-8M.txt -m 6 -n 2 &> output
+          diff output .github/test/gcc-8M-6-2
+  
+  cleanup:
+    
+    runs-on: self-hosted
+    if: always()
+    needs: build
+    steps:
+      - name: Clean up
+        run: echo "Cleaning up previous run"; rm -rf "${{ github.workspace }}";
