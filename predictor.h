@@ -19,7 +19,7 @@ class Predictor{
 
     public:
         Predictor(unsigned int, unsigned int, unsigned int, bool);
-        void makePrediction(string, bool);
+        bool makePrediction(string, bool);
         void printStats();
 };
 

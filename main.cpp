@@ -38,11 +38,14 @@ int main(int argc, char ** argv){
     // Initialize Predictor
     Predictor pred(m,n, addressBits, debug);
     string address = "";
-    bool expected;
+    bool expected, predicted;
 
     // Execute trace through Predictor
     while(trace.getNextBranch(address,expected)){
-        pred.makePrediction(address,expected);
+        predicted = pred.makePrediction(address,expected);
+    	if(debug){
+		printf("Branch address: 0x%s, predicted: %d, expected: %d\n", address.c_str(), predicted, expected);
+    	}
     }
 
     // Print results

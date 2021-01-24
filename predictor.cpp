@@ -22,23 +22,17 @@ void Predictor::updateGlobalHistory(bool expected){
     globalHistory = globalHistory & mask; 
 }
 
-void Predictor::makePrediction(string input, bool expected){
+bool Predictor::makePrediction(string input, bool expected){
     // Convert Hex address to integer address
     unsigned int address = truncateAddress(hexToInt(input));
 
-
-    // Currently, this simple branch predictor simulator simply takes the previous observed branch direction as the next prediction.
+    // Currently, this simple branch predictor simulator simply takes 
+    // the previous observed branch direction as the next prediction.
     // Predict branch based on last observed branch
     bool predicted = globalHistory & 1; 
    
-     
     // Update global history 
     updateGlobalHistory(expected);
-
-    if(this->debug){
-	printf("Branch address: 0x%s (%u), predicted: %d, expected: %d\n", input.c_str(), address, predicted, expected);
-    }
-
 
     // Update statistics
     if(predicted == expected){
@@ -46,6 +40,7 @@ void Predictor::makePrediction(string input, bool expected){
     }
     this->total++;
 
+    return predicted;
 }
 
 /*
