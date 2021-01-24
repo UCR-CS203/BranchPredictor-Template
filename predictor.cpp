@@ -54,10 +54,10 @@ void Predictor::printStats(){
     else{
         printf("Misclassification rate: %.2f%%\n", 100.00 * (1 - (double)(this->correct)/this->total));
     } 
-    if(this->debug){
+    
     printf("correct: %d\n", this->correct);
     printf("total: %d\n",this->total);
-    }
+
 
     // Update the following line to print out the number of BHT entires used.
     printf("BHT used %lu entries\n",0);  
