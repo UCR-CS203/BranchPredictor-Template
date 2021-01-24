@@ -1,5 +1,5 @@
 COMPILE = g++
-CFLAGS = -O3 
+CFLAGS = -O3 -Wall 
 
 OBJ_DIR = build
 
