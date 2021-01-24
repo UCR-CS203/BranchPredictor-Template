@@ -3,9 +3,9 @@
 #include <iomanip>
 
 Predictor::Predictor(unsigned int m, unsigned int n, unsigned int addrLength, bool debug){
-    this->historyBits = m;
-    this->globalHistory = 0;
-    this->addrBits = addrLength > 16 ? 16 : addrLength;
+    this->historyBits = m; // Size of global history
+    this->globalHistory = 0; 
+    this->addrBits = addrLength;
     this->debug = debug;
     this->correct = 0;
     this->total = 0;
