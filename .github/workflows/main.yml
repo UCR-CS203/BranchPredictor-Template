@@ -36,6 +36,8 @@ jobs:
       - name: Executing code - gcc-10K (0,1) predictor 
         run: |
           ./branchsim -i traces/gcc-10K.txt -m 0 -n 1 &> output
+          cat output
+          cat .github/test/gcc-10K-0-1
           diff output .github/test/gcc-10K-0-1
         
       - name: Executing code - gcc-10K (0,2) predictor 
