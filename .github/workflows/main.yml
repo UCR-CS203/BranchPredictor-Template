@@ -35,6 +35,16 @@ jobs:
           make clean
           make
 
+
+  test:
+    runs-on: self-hosted
+
+    timeoout-minutes: 20
+
+    needs: build
+
+    steps:
+
       # Checking (0,1) predictor
       - name: Checking - gcc-10K (0,1) predictor 
         run: |
@@ -160,7 +170,7 @@ jobs:
     
     runs-on: self-hosted
     if: always()
-    needs: build
+    needs: [build,test]
     steps:
       - name: Clean up
         run: echo "Cleaning up previous run"; rm -rf "${{ github.workspace }}";
