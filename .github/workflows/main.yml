@@ -39,7 +39,7 @@ jobs:
   test:
     runs-on: self-hosted
 
-    timeoout-minutes: 20
+    timeout-minutes: 20
 
     needs: build
 
