@@ -9,6 +9,7 @@ Predictor::Predictor(unsigned int m, unsigned int n, unsigned int addrLength, bo
     this->debug = debug;
     this->correct = 0;
     this->total = 0;
+    printf("BHT: %u-bit\n", n);
     printf("Address length: %u\n", this->addrBits);
     printf("History length: %u\n", this->historyBits);
     printf("Debug mode: %u\n", this->debug);
